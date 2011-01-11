@@ -22,8 +22,7 @@ class GitHubPlugin < Plugin
 	end
 
 	def listen(m)
-		# Ignore things unless we're directly talked to
-		return unless m.address?
+		return if m.address?
 
                 # Return unless we're addressed properly
 		return unless m.kind_of?(PrivMessage) && m.public?
