@@ -28,7 +28,7 @@ Usage
     - "#channelname:github_user:github_repo"
 
 2.  Ask the bot to provide you with information from GitHub
-
-  * `botname: #11`
-  * `botname: commit:SHA`
+    
+    `botname: #11`
+    `botname: commit:SHA`
 
