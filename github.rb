@@ -27,7 +27,7 @@ class GitHubPlugin < Plugin
                 # Return unless we're addressed properly
 		return unless m.kind_of?(PrivMessage) && m.public?
 
-                refs = m.message.scan(/(?:^|\W)(\[\S+\]|\#\d+|commit:\w+)(?:$|\W)/).flatten
+                refs = m.message.scan(/(?:^|\W)(\#\d+|commit:\w+)(?:$|\W)/).flatten
 
                 return unless refs.length > 0
 
