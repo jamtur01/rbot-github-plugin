@@ -22,6 +22,12 @@ class GitHubPlugin < Plugin
 	end
 
 	def listen(m)
+                valid_channels
+
+                @valid.each { |c|
+                  return unless c.to_s == m.target.to_s
+                }
+
 		return if m.address?
 
                 # Return unless we're addressed properly
@@ -32,9 +38,7 @@ class GitHubPlugin < Plugin
                 return unless refs.length > 0
 
                 refs.each do |ref|
-
                   answer = github_query(ref, m.target)
-
                   m.reply "#{m.sourcenick} #{ref} is #{answer}"
                 end
         end
@@ -60,9 +64,14 @@ class GitHubPlugin < Plugin
 
         def repo_channel(target)
                @bot.config['github.repomap'].each { |l|
-                     l.scan(/^#{target}\:(.+)\:(.+)/) { |w|
-                       return $1, $2
-                     }
+                     l.scan(/^#{target}\:(.+)\:(.+)/) { |u, r| return u, r }
+               }
+        end
+
+        def valid_channels
+               @valid = []
+               @bot.config['github.repomap'].each { |l|
+                     l.scan(/^(#.*?)\:/) { |w| @valid << w }
                }
         end
 end
