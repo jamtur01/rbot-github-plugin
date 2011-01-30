@@ -22,7 +22,9 @@ class GitHubPlugin < Plugin
 	end
 
 	def listen(m)
-		return if m.address?
+		return if valid_channel(m.target).nil?
+
+                return if m.address?
 
                 # Return unless we're addressed properly
 		return unless m.kind_of?(PrivMessage) && m.public?
@@ -56,6 +58,10 @@ class GitHubPlugin < Plugin
 
           return answer
         end
+
+        def valid_channel(target)
+               e = @bot.config['github.repomap'].find {|c| c =~ /^#{target}:/ }
+        end 
 
         def repo_channel(target)
                e = @bot.config['github.repomap'].find {|c| c =~ /^#{target}:/ }
