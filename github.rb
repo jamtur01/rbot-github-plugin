@@ -50,7 +50,7 @@ class GitHubPlugin < Plugin
             user = Octopi::User.find(u)
             repo = user.repository(r)
             issue = repo.issue($1)
-            answer = "'#{issue.title}' which was created #{issue.created_at} and has a status of #{issue.state.capitalize}"
+            answer = "'#{issue.title}' which was created #{issue.created_at.strftime('%A, %B%e, %l:%m:%M %p')} and has a status of #{issue.state.capitalize}"
           when ref.match(/^commit\:(\w+)/)
             commit = Octopi::Commit.find(:user => u, :repo => r, :sha => $1)
             answer = "'#{commit.message}' and was created by #{commit.author['name']}"
